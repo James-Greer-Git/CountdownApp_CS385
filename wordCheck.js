@@ -7,10 +7,11 @@ export default class FetchWord extends React.Component {
 
 
   async componentDidMount () {
-    const URL = "https://od-api.oxforddictionaries.com/api/v2";
-    const response = await fetch(URL, {headers : {"app_id" : "", "app_key" : ""}});
+    const URL = "https://api.dictionaryapi.dev/api/v2/entries/en/hello";
+    const response = await fetch(URL);
     const data = await response.json();
     console.log(data);
+    console.log(data[0].meanings)
   }
 
   render() {
