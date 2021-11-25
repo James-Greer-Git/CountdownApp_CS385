@@ -1,15 +1,18 @@
-import React from "react";
+import React, { Component } from "react";
 import {word} from "./word"
 //console.log(word);
+class App extends Component {
+  constructor(props) {
+    super(props);
+    console.log("in constructor");
 
-export default class FetchWord extends React.Component {
-  state = {
-    loading : true,
-    word : word,
-    defintion : [],
-    apiData : []
-  };
-
+    this.state = {
+      apiData: [],
+      loading : true,
+      definition: [],
+      word : word
+    };
+  }
 
   async componentDidMount () {
     const URL = "https://api.dictionaryapi.dev/api/v2/entries/en/" + this.state.word;
@@ -21,7 +24,7 @@ export default class FetchWord extends React.Component {
     this.setState({definition : data[0].meanings[0].definitions[0].definition});
     //console.log(data[0].meanings[0].definitions[0].definition)
     this.setState({loading : false})
-    console.log(this.state.definition);
+    //console.log(this.state.definition);
   }
 
   render() {
@@ -32,3 +35,4 @@ export default class FetchWord extends React.Component {
     );
   }
 }
+export default App;
