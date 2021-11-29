@@ -1,19 +1,21 @@
 import React, { Component } from "react";
 //import {ComponentA} from "./public/ComponentA";
-import {SearchForm} from "./public/SearchForm";
+//import {SearchForm} from "./public/SearchForm";
 
 class App extends Component {
   constructor(props){
     super(props);
     this.state = {
-      searchTerm : " ", 
+      searchTerm : "", 
       len : 1, 
       searchClick : false,
       choice : ""};
+      this.onSearchFormChange = this.onSearchFormChange.bind(this);
       this.EasyButtonPress = this.EasyButtonPress.bind(this);
       this.MediumButtonPress = this.MediumButtonPress.bind(this);
       this.HardButtonPress = this.HardButtonPress.bind(this);
-  };
+  }
+  
 EasyButtonPress(){
   this.setState({choice : "Easy"})
 }
@@ -22,6 +24,9 @@ MediumButtonPress(){
 }
 HardButtonPress(){
   this.setState({choice : "Hard"})
+}
+onSearchFormChange(event) {
+  this.setState({ searchTerm: event.target.value })
 }
 
   render(){
@@ -46,6 +51,30 @@ HardButtonPress(){
           </div>
       }
     </div>
+    );
+  }
+}
+class SearchForm extends Component {
+  render() {
+    // this.props are the properties which are provided or passed
+    // to this component. We have the searchTerm and we have the
+    // onChange function.
+    const searchTermFromProps = this.props.searchTerm;
+    const onChangeFromProps = this.props.onChange;
+
+    return (
+      <div className="SearchFormForm">
+        <hr />
+        Search Component:
+        <form>
+          <b>Type your search here: </b>
+          <input type="text" 
+          value={searchTermFromProps}
+          onChange={onChangeFromProps}
+          />
+        </form>
+        <hr />
+      </div>
     );
   }
 }
