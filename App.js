@@ -15,7 +15,7 @@ class App extends Component {
       this.MediumButtonPress = this.MediumButtonPress.bind(this);
       this.HardButtonPress = this.HardButtonPress.bind(this);
   }
-  
+ 
 EasyButtonPress(){
   this.setState({choice : "Easy"})
 }
@@ -47,10 +47,16 @@ SubmitPressed(){
         <button onClick = {this.HardButtonPress}>Hard</button> 30 Second Rounds
       </div> : 
           <div>
-          You selected: {this.state.choice}
-          <SearchForm
-          searchTerm = {this.state.searchTerm}
-          onChange = {this.onSearchFormChange}/>
+          {this.state.SubmitPressed === true ?
+            <div>
+              True
+            </div> : 
+            <div>You selected: {this.state.choice}
+            <SearchForm
+            searchTerm = {this.state.searchTerm}
+            onChange = {this.onSearchFormChange}/>
+            </div>
+          }
           </div>
       }
     </div>
