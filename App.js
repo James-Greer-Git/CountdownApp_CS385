@@ -8,7 +8,7 @@ class App extends Component {
     this.state = {
       searchTerm : "", 
       len : 1, 
-      searchClick : false,
+      SubmitPressed : false,
       choice : ""};
       this.onSearchFormChange = this.onSearchFormChange.bind(this);
       this.EasyButtonPress = this.EasyButtonPress.bind(this);
@@ -27,6 +27,9 @@ HardButtonPress(){
 }
 onSearchFormChange(event) {
   this.setState({ searchTerm: event.target.value })
+}
+SubmitPressed(){
+  this.setState({SubmitPressed : true});
 }
 
   render(){
@@ -56,9 +59,6 @@ onSearchFormChange(event) {
 }
 class SearchForm extends Component {
   render() {
-    // this.props are the properties which are provided or passed
-    // to this component. We have the searchTerm and we have the
-    // onChange function.
     const searchTermFromProps = this.props.searchTerm;
     const onChangeFromProps = this.props.onChange;
 
@@ -72,6 +72,9 @@ class SearchForm extends Component {
           value={searchTermFromProps}
           onChange={onChangeFromProps}
           />
+          <div>
+            <button onClick = {this.SubmitPressed}>Submit</button>
+          </div>
         </form>
         <hr />
       </div>
