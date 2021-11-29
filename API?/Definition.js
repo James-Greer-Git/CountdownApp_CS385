@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import {word} from "./word"
 //console.log(word);
 class Definition extends Component {
   constructor(props) {
@@ -10,13 +9,12 @@ class Definition extends Component {
       apiData: [],
       loading: true,
       definition: [],
-      word: ""
     };
   }
 
   async componentDidMount() {
-    const URL =
-      "https://api.dictionaryapi.dev/api/v2/entries/en/" + this.state.word;
+    const word = this.props.searchTerm;
+    const URL = "https://api.dictionaryapi.dev/api/v2/entries/en/" + word;
     const response = await fetch(URL);
     const data = await response.json();
     this.setState({ apiData: data });
@@ -30,12 +28,12 @@ class Definition extends Component {
     //console.log(this.state.definition);
   }
 
-  /*render() {
+  render() {
     return (
       <div>
         {this.state.loading ? <div>loading...</div> : <div>Definition: {this.state.definition}</div>}
       </div>
     );
-  }*/
+  }
 }
 export default Definition;
