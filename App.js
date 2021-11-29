@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-//import {ComponentA} from "./public/ComponentA";
-//import {SearchForm} from "./public/SearchForm";
+//import Definition from "./Definition"
+import SearchForm from "./SearchForm";
 
 class App extends Component {
   constructor(props){
@@ -27,9 +27,6 @@ HardButtonPress(){
 }
 onSearchFormChange(event) {
   this.setState({ searchTerm: event.target.value })
-}
-SubmitPressed(){
-  this.setState({SubmitPressed : true});
 }
 
   render(){
@@ -60,30 +57,6 @@ SubmitPressed(){
           </div>
       }
     </div>
-    );
-  }
-}
-class SearchForm extends Component {
-  render() {
-    const searchTermFromProps = this.props.searchTerm;
-    const onChangeFromProps = this.props.onChange;
-
-    return (
-      <div className="SearchFormForm">
-        <hr />
-        Search Component:
-        <form>
-          <b>Type your search here: </b>
-          <input type="text" 
-          value={searchTermFromProps}
-          onChange={onChangeFromProps}
-          />
-          <div>
-            <button onClick = {this.SubmitPressed}>Submit</button>
-          </div>
-        </form>
-        <hr />
-      </div>
     );
   }
 }
