@@ -1,0 +1,83 @@
+import React, { Component } from "react";
+
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { searchTerm: "", pionts: "", wrongInput: true };
+    this.onSearchFormChange = this.onSearchFormChange.bind(this);
+  } // end constructor
+  /** This is the method called when the search form box changes **/
+  /** Javascript will create an event object for you **/
+  onSearchFormChange(event) {
+    const re = /^[labellingLABELLING\b]+$/;
+    const wrongletters = /^[a-zA-Z\b]+$/;
+    const wrong = /^[0-9\b]+$/;
+    const wrongregex = /^[^a-zA-Z0-9]+$/;
+
+    if (event.target.value === "" || re.test(event.target.value)) {
+      this.setState({ searchTerm: event.target.value });
+      this.setState({ wrongInput: true });
+    } else if (
+      wrongletters.test(event.target.value) ||
+      wrong.test(event.target.value) ||
+      wrongregex.test(event.target.value)
+    ) {
+      this.setState({ wrongInput: false });
+      console.log(false);
+    }
+  }
+
+  render() {
+    return (
+      <div className="App">
+        <button>Back To Homepage</button>
+        <h1>PRESS PLAY TO BEGIN</h1>
+        <button>PLAY!</button>
+        <hr />
+        <h3>Timer</h3>
+        <h3>Pionts</h3>
+        {this.state.searchTerm.length} <hr />
+        <SearchForm
+          searchTerm={this.state.searchTerm}
+          wrongInput={this.state.wrongInput}
+          onChange={this.onSearchFormChange}
+        />
+      </div>
+    ); // end of return statement
+  } // end of render function
+}
+
+class SearchForm extends Component {
+  render() {
+    // this.props are the properties which are provided or passed
+    // to this component. We have the searchTerm and we have the
+    // onChange function.
+    const searchTermFromProps = this.props.searchTerm;
+    const onChangeFromProps = this.props.onChange;
+    let wronganswer = this.props.wrongInput;
+    const letters1 = "ALBELLING";
+
+    return (
+      <div className="SearchFormForm">
+        <h3>Letters</h3>
+        {letters1}
+        <hr />
+        Type in your answer here:
+        <form>
+          <input
+            maxLength={9}
+            value={searchTermFromProps}
+            onChange={onChangeFromProps}
+          />
+        </form>
+        {wronganswer === false ? (
+          <p>You have entered an invalid character</p>
+        ) : null}
+        <hr />
+        <button>SUBMIT</button>
+      </div>
+    );
+  }
+} // close the SearchForm Component
+
+export default App;
