@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-//console.log(word);
+
 class Definition extends Component {
   constructor(props) {
     super(props);
@@ -7,31 +7,35 @@ class Definition extends Component {
 
     this.state = {
       apiData: [],
-      loading: true,
       definition: [],
+      definitionFound: false
     };
   }
 
   async componentDidMount() {
-    const word = this.props.searchTerm;
+    try {
+    const word = this.props.word;
     const URL = "https://api.dictionaryapi.dev/api/v2/entries/en/" + word;
     const response = await fetch(URL);
     const data = await response.json();
     this.setState({ apiData: data });
-    //console.log(data);
-    //console.log(word);
-    this.setState({
-      definition: data[0].meanings[0].definitions[0].definition
-    });
-    //console.log(data[0].meanings[0].definitions[0].definition)
-    this.setState({ loading: false });
-    //console.log(this.state.definition);
+      this.setState({
+        definition: data[0].meanings[0].definitions[0].definition
+      });
+      this.setState({ definitionFound: true });
+    } catch {
+      this.setState({ definitionFound: false });
+    }
   }
 
   render() {
     return (
       <div>
-        {this.state.loading ? <div>loading...</div> : <div>Definition: {this.state.definition}</div>}
+        {this.state.definitionFound ? (
+          <div>Definition: {this.state.definition}</div>
+        ) : (
+          <div>{this.props.word} is not a word.</div>
+        )}
       </div>
     );
   }
