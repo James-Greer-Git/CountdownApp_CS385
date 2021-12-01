@@ -1,16 +1,24 @@
 import React, { Component } from "react";
-import Definition from "./Definition"
+import Definition from "./Definition";
 class SearchForm extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
-      //word : "Hello",
-      searchTerm : "",
-      submitPress : false
-    }
+      searchTerm: "",
+    };
+    this.onSearchFormChange = this.onSearchFormChange.bind(this);
   }
-  SubmitPressed(){
-    this.setState({submitPress : false})
+  onSearchFormChange(event){
+    this.setState({searchTerm: event.target.value});
+    return(
+      <Definition
+          word = {this.state.searchTerm}
+          />
+    )
+  }
+  SubmitPressed() {
+    console.log("Submit Button Pressed")
+    this.setState({SubmitPressed : true})
   }
   render() {
     const searchTermFromProps = this.props.searchTerm;
@@ -22,20 +30,15 @@ class SearchForm extends Component {
         Search Component:
         <form>
           <b>Type your search here: </b>
-          <input type="text" 
-          value={searchTermFromProps}
-          onChange={onChangeFromProps}
+          <input
+            type="text"
+            value={searchTermFromProps}
+            onChange={onChangeFromProps}
           />
           <div>
             <button onClick = {this.SubmitPressed}>Submit</button>
-            {this.state.submitPress ? <div>
-              <Definition
-              searchTerm = {this.state.searchTerm}/>
-            </div> :
-             <div>
-              
-             </div>}
           </div>
+          {this.state.SubmitPressed ? <div>{this.state.searchTerm}</div> : <div></div>}
         </form>
         <hr />
       </div>
