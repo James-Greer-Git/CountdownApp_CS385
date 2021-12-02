@@ -1,5 +1,3 @@
-import logo from './logo.svg';
-import './App.css';
 import Timer2 from "./Timer2";
 import React, { Component } from "react";
 import Definition from "./Definition"
