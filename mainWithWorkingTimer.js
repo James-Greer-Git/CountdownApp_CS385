@@ -1,48 +1,37 @@
-import React, { Component } from "react";
-import Definition from "./Definition"
-import SearchForm from "./SearchForm";
-//import Timer from "./Timer";
+import logo from './logo.svg';
+import './App.css';
 import Timer2 from "./Timer2";
+import React, { Component } from "react";
+//import Definition from "./Definition"
+import SearchForm from "./SearchForm";
 
 class App extends Component {
-  constructor(props) {
+  constructor(props){
     super(props);
     this.state = {
-      searchTerm: "",
-      len: 1,
-      SubmitPressed: false,
-      choice: "",
-      seconds: 60
-    };
-    //function start()=this.props.func(startTimer());
-    this.onSearchFormChange = this.onSearchFormChange.bind(this);
-    this.EasyButtonPress = this.EasyButtonPress.bind(this);
-    this.MediumButtonPress = this.MediumButtonPress.bind(this);
-    this.HardButtonPress = this.HardButtonPress.bind(this);
+      searchTerm : "", 
+      len : 1, 
+      SubmitPressed : false,
+      choice : "",
+      seconds : 60};
+      this.onSearchFormChange = this.onSearchFormChange.bind(this);
+      this.EasyButtonPress = this.EasyButtonPress.bind(this);
+      this.MediumButtonPress = this.MediumButtonPress.bind(this);
+      this.HardButtonPress = this.HardButtonPress.bind(this);
   }
-  //localStorage localtimer=Timer;
-
-  EasyButtonPress() {
-    this.setState({ choice: "Easy", seconds: 60 });
-    //Timer2();
-    //console.log(Timer2);
-    //{this.props.startTimer};
-    // THIS DOESNT GIVE ERROR BUT DOESNT WORK new Timer();
-    //Timer.startTimer();
-    //var localtimer=Timer;
-    //localtimer.startTimer();
-    //trying to call start timer method
-    //var startTimer()=startTimer() from "./Timer";
-  }
-  MediumButtonPress() {
-    this.setState({ choice: "Medium", seconds: 45 });
-  }
-  HardButtonPress() {
-    this.setState({ choice: "Hard", seconds: 30 });
-  }
-  onSearchFormChange(event) {
-    this.setState({ searchTerm: event.target.value });
-  }
+ 
+EasyButtonPress(){
+  this.setState({ choice: "Easy", seconds: 60 });
+}
+MediumButtonPress(){
+  this.setState({ choice: "Medium", seconds: 45 });
+}
+HardButtonPress(){
+  this.setState({ choice: "Hard", seconds: 30 });
+}
+onSearchFormChange(event) {
+  this.setState({ searchTerm: event.target.value })
+}
 
   render() {
     return (
@@ -52,14 +41,11 @@ class App extends Component {
         {this.state.choice === "" ? (
           <div>
             <h3>Choose a Difficulty</h3>
-            <button onClick={this.EasyButtonPress}>Easy</button> 60 Second
-            Rounds
+            <button onClick={this.EasyButtonPress}>Easy</button> 60 Second Rounds
             <hr></hr>
-            <button onClick={this.MediumButtonPress}>Medium</button> 45 Second
-            Rounds
+            <button onClick={this.MediumButtonPress}>Medium</button> 45 Second Rounds
             <hr></hr>
-            <button onClick={this.HardButtonPress}>Hard</button> 30 Second
-            Rounds
+            <button onClick={this.HardButtonPress}>Hard</button> 30 Second Rounds
           </div>
         ) : (
           <div>
