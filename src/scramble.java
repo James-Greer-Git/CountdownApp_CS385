@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import { wordList } from "./wordList.js";
-var randomvar = wordList;
+import { randomwords } from "./RandomWords.js";
+var randomvar = randomwords;
 
-class scramble extends Component {
+class RandomLetters extends Component {
   randomword() {}
   render() {
     var text = "";
@@ -15,7 +15,12 @@ class scramble extends Component {
       possible = possible.replace(character, "");
     }
 
-    return <h3>{text}</h3>;
+    return (
+      <div className="App">
+        {text.toUpperCase()}
+        <br />
+      </div>
+    );
   }
 }
-export default scramble;
+export default RandomLetters;
