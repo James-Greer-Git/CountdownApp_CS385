@@ -1,4 +1,4 @@
-export const wordList = [
+export const randomwords = [
   "labelling",
   "quadratic",
   "vaccinate",
