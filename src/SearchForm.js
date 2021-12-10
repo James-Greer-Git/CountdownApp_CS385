@@ -8,17 +8,21 @@ class SearchForm extends Component {
       searchTerm: "",
       pionts: "",
       wrongInput: true,
-      SubmitPressed: false,
+      submitPressed: false,
       len: 0,
       word: ""
     };
 
     this.onSearchFormChange = this.onSearchFormChange.bind(this);
-    this.onSubmitButtonPress = this.onSubmitButtonPress.bind(this);
+    this.onSubmitButtonPressed = this.onSubmitButtonPressed.bind(this);
+  }
+  onSubmitButtonPressed(){
+    this.setState({submitPressed: true, word: this.state.searchTerm});
+    this.props.submitPressed();
+    console.log("Search Form Submit Pressed");
   }
   onSearchFormChange(event) {
     var retest = /^[a-zA-Z]+$/;
-
     if (event.target.value === "" || retest.test(event.target.value)) {
       this.setState({ searchTerm: event.target.value });
       this.setState({ wrongInput: true });
@@ -26,15 +30,12 @@ class SearchForm extends Component {
       this.setState({ wrongInput: false });
     }
   }
-  onSubmitButtonPress() {
-    this.setState({ SubmitPressed: true, word: this.state.searchTerm });
-  }
   render() {
     let wronganswer = this.state.wrongInput;
 
     return (
       <div className="AnswerForm">
-        {this.state.SubmitPressed ? (
+        {this.state.submitPressed ? (
           <div>
             <Definition word={this.state.word} />
           </div>
@@ -48,7 +49,7 @@ class SearchForm extends Component {
                 onChange={this.onSearchFormChange}
               />
             </form>
-            <button onClick={this.onSubmitButtonPress}>Submit</button>
+            <button onClick={this.onSubmitButtonPressed}>Submit</button>
             {wronganswer === false ? (
               <p>You have entered an invalid character</p>
             ) : null}
