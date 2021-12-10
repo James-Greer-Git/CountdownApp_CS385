@@ -1,8 +1,10 @@
 //import "./App.css";
 import React, { Component } from "react";
+import Timer1 from "./Timer1";
 import Timer2 from "./Timer2";
 import SearchForm from "./SearchForm";
 import RandomLetters from "./RandomLetters";
+import TimesUpScreen from "./TimesUpScreen";
 
 class App extends Component {
   constructor(props) {
@@ -11,7 +13,8 @@ class App extends Component {
       choice: "",
       seconds: 0,
       playPressed: false,
-      submitPressed: false
+      submitPressed: false,
+      timesUp: false
     };
     this.onBackToHomePagePress = this.onBackToHomePagePress.bind(this);
     this.onPlayButtonPress = this.onPlayButtonPress.bind(this);
@@ -29,7 +32,7 @@ class App extends Component {
     console.log("Medium Button Pressed");
   }
   onHardButtonPress() {
-    this.setState({ choice: "Hard", seconds: 30 });
+    this.setState({ choice: "Hard", seconds: 3 });
     console.log("Hard Button Pressed");
   }
   onBackToHomePagePress() {
@@ -43,11 +46,15 @@ class App extends Component {
   onSubmitButtonPress() {
     this.setState({ submitPressed: true });
   }
+  onTimesUp() {
+    this.setState({ timesUp: true });
+  }
 
   render() {
     var condition1 = this.state.choice === "";
     var condition2 = !condition1 && !this.state.playPressed;
     var condition3 = this.state.playPressed && !this.state.submitPressed;
+    var condition4 = this.state.playPressed && !this.state.timesUp;
 
     return (
       <div>
@@ -69,14 +76,22 @@ class App extends Component {
             <button onClick={this.onPlayButtonPress}>Play</button>
           </div>
         )}
-        {this.state.playPressed && (
+        {condition4 && (
           <div>
-            {condition3 && <Timer2 initialSeconds={this.state.seconds} />}
-            <b><RandomLetters/></b>
+            {condition3 && (
+              <Timer2
+                timesUp={this.state.timesUp}
+                initialSeconds={this.state.seconds}
+              />
+            )}
+            <b>
+              <RandomLetters />
+            </b>
             <p></p>
             <SearchForm submitPressed={this.onSubmitButtonPress} />
           </div>
         )}
+        {this.state.timesUp && <TimesUpScreen />}
       </div>
     );
   }
