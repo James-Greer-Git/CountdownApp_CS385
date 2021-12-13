@@ -1,4 +1,4 @@
-export const randomwords = [
+export var randomwords = [
   "labelling",
   "quadratic",
   "vaccinate",
