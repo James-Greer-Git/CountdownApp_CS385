@@ -1,97 +1,188 @@
-//import "./App.css";
+import "./App.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 import React, { Component } from "react";
-import Timer1 from "./Timer1";
 import Timer2 from "./Timer2";
+import RandomLetters from "./GenerateRandomLetters";
 import SearchForm from "./SearchForm";
-import RandomLetters from "./RandomLetters";
-import TimesUpScreen from "./TimesUpScreen";
+import { randomwords } from "./randomwords.js";
+import logo from "./countdown.jpg";
+var randomvar = randomwords;
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      searchTerm: "",
+      len: 1,
+      SubmitPressed: false,
       choice: "",
-      seconds: 0,
+      seconds: 60,
+      wrongInput: true,
       playPressed: false,
-      submitPressed: false,
-      timesUp: false
+      possible: randomvar[Math.floor(Math.random() * randomvar.length)]
     };
     this.onBackToHomePagePress = this.onBackToHomePagePress.bind(this);
-    this.onPlayButtonPress = this.onPlayButtonPress.bind(this);
+    this.onSearchFormChange = this.onSearchFormChange.bind(this);
+    this.EasyButtonPress = this.EasyButtonPress.bind(this);
+    this.MediumButtonPress = this.MediumButtonPress.bind(this);
+    this.HardButtonPress = this.HardButtonPress.bind(this);
     this.onSubmitButtonPress = this.onSubmitButtonPress.bind(this);
-    this.onEasyButtonPress = this.onEasyButtonPress.bind(this);
-    this.onMediumButtonPress = this.onMediumButtonPress.bind(this);
-    this.onHardButtonPress = this.onHardButtonPress.bind(this);
+    this.onPlayButtonPress = this.onPlayButtonPress.bind(this);
   }
-  onEasyButtonPress() {
+
+  onSearchFormChange(event) {
+    this.setState({ searchTerm: event.target.value });
+  }
+
+  EasyButtonPress() {
     this.setState({ choice: "Easy", seconds: 60 });
-    console.log("Easy Button Pressed");
   }
-  onMediumButtonPress() {
+  MediumButtonPress() {
     this.setState({ choice: "Medium", seconds: 45 });
-    console.log("Medium Button Pressed");
   }
-  onHardButtonPress() {
-    this.setState({ choice: "Hard", seconds: 3 });
-    console.log("Hard Button Pressed");
-  }
-  onBackToHomePagePress() {
-    this.setState({ choice: "", playPressed: false, submitPressed: false });
-    console.log("Homepage Button Pressed");
+  HardButtonPress() {
+    this.setState({ choice: "Hard", seconds: 30 });
   }
   onPlayButtonPress() {
     this.setState({ playPressed: true });
-    console.log("Play Button Pressed");
   }
   onSubmitButtonPress() {
-    this.setState({ submitPressed: true });
+    this.setState({ SubmitPressed: true, word: this.state.searchTerm });
   }
-  onTimesUp() {
-    this.setState({ timesUp: true });
+  onBackToHomePagePress() {
+    this.setState({ choice: "", playPressed: false, SubmitPressed: false });
   }
 
   render() {
     var condition1 = this.state.choice === "";
     var condition2 = !condition1 && !this.state.playPressed;
-    var condition3 = this.state.playPressed && !this.state.submitPressed;
-    var condition4 = this.state.playPressed && !this.state.timesUp;
+    var condition3 = this.state.playPressed;
+    var condition4 = !this.state.SubmitPressed;
 
     return (
-      <div>
-        <h2>Countdown Game</h2>
-        <button onClick={this.onBackToHomePagePress}>Back to homepage</button>
-        {condition1 && (
-          <div>
-            <h3>Choose a Difficulty</h3>
-            <button onClick={this.onEasyButtonPress}>Easy</button> 60 Second
-            Round<hr></hr>
-            <button onClick={this.onMediumButtonPress}>Medium</button> 45 Second
-            Round<hr></hr>
-            <button onClick={this.onHardButtonPress}>Hard</button> 30 Second
-            Round
-          </div>
-        )}
-        {condition2 && (
-          <div>
-            <button onClick={this.onPlayButtonPress}>Play</button>
-          </div>
-        )}
-        {condition4 && (
-          <div>
-            {condition3 && (
-              <Timer2
-                timesUp={this.state.timesUp}
-                initialSeconds={this.state.seconds}
-              />
+      <div className="App">
+        <div className="container">
+          <div className="row">
+            {condition1 && (
+              <div className="homepage_writing">
+                <img className="logo col-12" src={logo} alt="countdown logo" />
+
+                <div className="Title col-12">
+                  <h1>COUNTDOWN GAME </h1>
+                  <h3>Choose a Difficulty</h3>
+                </div>
+                <div className="row space">
+                  <div className="buttonspacing col-sm">
+                    <button
+                      type="button"
+                      className="btn btn-primary btn-lg"
+                      onClick={this.EasyButtonPress}
+                    >
+                      Easy
+                      <br />
+                      60 Seconds
+                    </button>{" "}
+                  </div>
+                  <div className="buttonspacing col-sm">
+                    <button
+                      type="button"
+                      className="btn btn-primary btn-lg"
+                      onClick={this.MediumButtonPress}
+                    >
+                      Medium <br />
+                      45 Seconds
+                    </button>{" "}
+                  </div>
+                  <div className="buttonspacing col-sm">
+                    <button
+                      type="button"
+                      className="btn btn-primary btn-lg"
+                      onClick={this.HardButtonPress}
+                    >
+                      Hard
+                      <br />
+                      30 Seconds
+                    </button>{" "}
+                  </div>
+                </div>
+              </div>
             )}
-            <b>
-              <RandomLetters />
-            </b>
-            <p></p>
-            <SearchForm submitPressed={this.onSubmitButtonPress} />
+          </div>
+        </div>
+
+        <div className="App">
+          <div className="container">
+            {condition2 && (
+              <div className="gamepage">
+                <div className="backtohomepage">
+                  <div className="row">
+                    <div className="col-12">
+                      <button
+                        type="button"
+                        className="btn btn-primary btn-sm"
+                        onClick={this.onBackToHomePagePress}
+                      >
+                        Back to homepage
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <h1>COUNTDOWN GAME </h1>
+                <h2>PRESS PLAY TO BEGIN</h2>
+                <div className="row">
+                  <div className="col-12">
+                    <button
+                      type="button"
+                      className="btn btn-primary btn-lg"
+                      onClick={this.onPlayButtonPress}
+                    >
+                      Play
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+        {condition3 && (
+          <div>
+            <div className="gamepage">
+              {condition4 && (
+                <div className="backtohomepage container">
+                  <div>
+                    <button
+                      type="button"
+                      className="btn btn-primary btn-sm"
+                      onClick={this.onBackToHomePagePress}
+                    >
+                      Back to homepage
+                    </button>
+                  </div>
+                  <div className="gamepagespace">
+                    <h1>COUNTDOWN GAME</h1>
+                    <p>You have selected : {this.state.choice}</p>
+                    <hr />
+                    <h3>Timer</h3>
+                    <Timer2 initialSeconds={this.state.seconds} />
+                    <h3>Letters</h3>
+                    <div className="row">
+                      <div className="col-12">
+                        <RandomLetters word={this.state.possible} />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+              <div>
+                <SearchForm
+                  bestAnswer={this.state.possible}
+                  submitPressed={this.onSubmitButtonPress}
+                  //Need to add timesUp check to get rid of everything if it runs out
+                />
+              </div>
+            </div>
           </div>
         )}
-        {this.state.timesUp && <TimesUpScreen />}
       </div>
     );
   }
