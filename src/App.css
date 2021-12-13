@@ -36,3 +36,70 @@
     transform: rotate(360deg);
   }
 }
+
+.App {
+  background-color: #070f50;
+  padding: 20px;
+}
+.body {
+  background-color: #070f50;
+}
+
+.homepage_writing {
+  color: white;
+}
+
+.logo {
+  max-height: 500px;
+  max-width: 700px;
+}
+.buttonspacing {
+  margin-top: 35px;
+  margin-bottom: 15px;
+}
+
+.space {
+  margin-top: 55px;
+}
+.Title {
+  font-weight: 600px;
+  margin-top: 55px;
+  margin-bottom: 10px;
+}
+
+.backtohomepage {
+  margin: 20px;
+  padding: 10px;
+}
+
+.gamepage {
+  background-color: #0c459f;
+  color: white;
+  padding-bottom: 40px;
+  padding-bottom: 30px;
+}
+
+.form-control {
+  max-width: 70%;
+  margin: 0 auto;
+  border-radius: 75px;
+}
+
+.gamepagespace {
+  margin-top: 20px;
+}
+
+.Letters {
+  font-size: 30px;
+  background-color: #070f50;
+  border-radius: 45px;
+  margin: auto 0;
+}
+
+.submit {
+  margin-top: 25px;
+}
+
+.Congratspage {
+  padding: 20px;
+}
