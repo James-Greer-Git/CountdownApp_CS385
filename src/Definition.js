@@ -1,8 +1,10 @@
 import React, { Component } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 class Definition extends Component {
   constructor(props) {
     super(props);
+    console.log("in constructor");
 
     this.state = {
       apiData: [],
@@ -31,9 +33,7 @@ class Definition extends Component {
     return (
       <div>
         {this.state.definitionFound ? (
-          <div>
-            <b>Definition:</b> {this.state.definition}
-          </div>
+          <div>{this.state.definition}</div>
         ) : (
           <div>{this.props.word} is not a word.</div>
         )}
