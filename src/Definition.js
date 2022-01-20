@@ -1,116 +1,46 @@
-import "./App.css";
-import Timer2 from "./Timer2";
 import React, { Component } from "react";
-import Definition from "./Definition";
-import SearchForm from "./SearchForm";
-//import Difficulty from "./Difficulty";
+import "bootstrap/dist/css/bootstrap.min.css";
 
-class App extends Component {
+class Definition extends Component {
   constructor(props) {
     super(props);
+    //console.log("in constructor");
+
     this.state = {
-      searchTerm: "",
-      len: 1,
-      SubmitPressed: false,
-      choice: "",
-      seconds: 60,
-      PlayPressed: false
+      apiData: [],
+      //the definition returned
+      definition: [],
+      //was a definition found
+      definitionFound: false
     };
-    this.onSearchFormChange = this.onSearchFormChange.bind(this);
-    this.onSubmitButtonPress = this.onSubmitButtonPress.bind(this);
-    this.EasyButtonPress = this.EasyButtonPress.bind(this);
-    this.MediumButtonPress = this.MediumButtonPress.bind(this);
-    this.HardButtonPress = this.HardButtonPress.bind(this);
-    this.onPlayButtonPress = this.onPlayButtonPress.bind(this);
-    this.onPlayAgainPress = this.onPlayAgainPress.bind(this);
   }
 
-  EasyButtonPress() {
-    this.setState({ choice: "Easy", seconds: 60 });
-    console.log("Easy Button Pressed");
-  }
-  MediumButtonPress() {
-    this.setState({ choice: "Medium", seconds: 45 });
-    console.log("Medium Button Pressed");
-  }
-  HardButtonPress() {
-    this.setState({ choice: "Hard", seconds: 30 });
-    console.log("Hard Button Pressed");
-  }
-  onPlayButtonPress() {
-    this.setState({ PlayPressed: true });
-    console.log("Play Button Pressed");
-  }
-  onSearchFormChange(event) {
-    this.setState({ searchTerm: event.target.value });
-  }
-  onSubmitButtonPress() {
-    this.setState({ submitPress: true, word: this.state.searchTerm });
-  }
-  onPlayAgainPress() {
-    this.setState({ choice: "", PlayPressed: false, submitPress: false });
+  async componentDidMount() {
+    try {
+      const word = this.props.word;
+      const URL = "https://api.dictionaryapi.dev/api/v2/entries/en/" + word;
+      const response = await fetch(URL);
+      const data = await response.json();
+      this.setState({ apiData: data });
+      this.setState({
+        definition: data[0].meanings[0].definitions[0].definition
+      });
+      this.setState({ definitionFound: true });
+    } catch {
+      this.setState({ definitionFound: false });
+    }
   }
 
   render() {
     return (
-      <div className="App">
-        <h2>Countdown Game</h2>
-        {this.state.choice === "" ? (
-          <div>
-            <h3>Choose a Difficulty</h3>
-            <button onClick={this.EasyButtonPress}>Easy</button> 60 Second
-            Rounds
-            <hr></hr>
-            <button onClick={this.MediumButtonPress}>Medium</button> 45 Second
-            Rounds
-            <hr></hr>
-            <button onClick={this.HardButtonPress}>Hard</button> 30 Second
-            Rounds
-          </div>
+      <div>
+        {this.state.definitionFound ? (
+          <div>{this.state.definition}</div>
         ) : (
-          <div>
-            {this.state.PlayPressed ? (
-              <div>
-                {this.state.submitPress ? (
-                  <div></div>
-                ) : (
-                  <div>
-                    <Timer2 initialSeconds={this.state.seconds} />
-                    <SearchForm
-                      searchTerm={this.state.searchTerm}
-                      onChange={this.onSearchFormChange}
-                    />
-                    <button onClick={this.onSubmitButtonPress}>Submit</button>
-                  </div>
-                )}
-                {this.state.submitPress ? (
-                  <div>
-                    <Definition word={this.state.word} />
-                    <div>
-                      Points: {this.state.word.length}
-                      <div>
-                        <button onClick={this.onPlayAgainPress}>
-                          Play Again
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                ) : (
-                  <div></div>
-                )}
-              </div>
-            ) : (
-              <div>
-                <b>You chose {this.state.choice}</b>
-                <div>
-                  <button onClick={this.onPlayButtonPress}>Play</button>
-                </div>
-              </div>
-            )}
-          </div>
+          <div>{this.props.word} is not a word.</div>
         )}
       </div>
     );
   }
 }
-export default App;
+export default Definition;
